@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fa90fdf946a9c64bb6cc2329f7885a7, type: 3}
+  m_Name: GameConfiguration
+  m_EditorClassIdentifier: 
+  cycleDuration: 300
+  dayPhaseRatio: 0.7
+  springCycles: 10
+  summerCycles: 15
+  autumnCycles: 10
+  winterCycles: 10
+  maxBeePopulation: 100
+  beeLifespan: 20
+  beeSpeed: 5
+  beeCarryCapacity: 2
+  beeWorkEfficiency: 1
+  beeHealthRegenRate: 0.1
+  queenLifespan: 100
+  queenHungerDecayRate: 5
+  queenEggLayInterval: 30
+  queenMaxEggsPerLaying: 3
+  eggDuration: 3
+  larvaDuration: 6
+  pupaDuration: 12
+  broodNutritionDecayRate: 0.1
+  broodRequiredNutritionForGrowth: 0.8
+  startingHoney: 100
+  startingPollen: 50
+  startingBeeswax: 20
+  startingRoyalJelly: 10
+  honeyConsumptionPerBeePerCycle: 2
+  royalJellyConsumptionPerQueenPerCycle: 5
+  winterHoneyConsumptionMultiplier: 2
+  honeyToRoyalJellyRatio: 2
+  pollenToRoyalJellyRatio: 1
+  royalJellyProductionAmount: 1
+  honeyToBeeswaxRatio: 3
+  pollenToBeeswaxRatio: 1
+  beeswaxProductionAmount: 1
+  basicCellCapacity: 1
+  nurseryCellCapacity: 1
+  honeyCellCapacity: 10
+  pollenCellCapacity: 8
+  nurseryTargetTemperature: 35
+  cellTemperatureDecayRate: 2
+  maxConcurrentTasks: 20
+  taskUpdateInterval: 1
+  taskGenerationInterval: 5
+  taskWorkDuration: 5
+  foragingBeeSpeed: 5
+  pathRecordingInterval: 0.5
+  maxConcurrentForagers: 10
+  resourceNodeRegenRate: 1
+  resourceNodeHarvestRate: 2
+  honeyNodeMaxCapacity: 100
+  pollenNodeMaxCapacity: 80
+  honeyNodeCount: 3
+  pollenNodeCount: 3
+  spiderDamage: 20
+  spiderRadius: 3
+  spiderActivationChance: 0.1
+  spiderDuration: 5
+  windDamage: 10
+  windRadius: 5
+  windActivationChance: 0.05
+  windDuration: 10
+  lowHoneyThreshold: 20
+  lowPollenThreshold: 15
+  lowRoyalJellyThreshold: 5
+  notificationDuration: 5
+  maxNotifications: 50
+  masterVolume: 1
+  sfxVolume: 0.8
+  musicVolume: 0.6
+  uiVolume: 0.7
+  difficultyMultiplier: 1
+  resourceGenerationMultiplier: 1
+  populationGrowthMultiplier: 1
+  workEfficiencyMultiplier: 1
+  enableDebugMode: 0
+  showDebugGizmos: 0
+  enableConsoleLogging: 1
+  enablePerformanceMetrics: 0

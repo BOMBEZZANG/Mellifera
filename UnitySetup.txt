@@ -1,0 +1,405 @@
+
+  🎯 Unity Setup Guide for Mellifera: Hive OS
+
+  1. Unity Project Setup
+
+  Initial Project Creation
+
+  1. Create New Project
+    - Open Unity Hub
+    - Click "New Project"
+    - Select "2D (URP)" template
+    - Name: "Mellifera_HiveOS"
+    - Location: Choose your desired folder
+    - Click "Create"
+  2. Import Required Packages
+    - Window → Package Manager
+    - Install these packages:
+        - Input System (2.0.0+)
+      - TextMeshPro (3.0.0+)
+      - 2D Pixel Perfect (optional but recommended)
+
+  2. Scene Setup
+
+  Main Scene Hierarchy Structure
+
+  SampleScene
+  ├── GameManager (Empty GameObject)
+  ├── UI Canvas
+  │   ├── ResourceDisplayUI
+  │   ├── NotificationSystem
+  │   └── CommandPanel
+  ├── Hive
+  │   ├── HiveCells (Empty GameObject - Container)
+  │   └── BeeSpawnPoint (Empty GameObject)
+  ├── ExternalMap
+  │   ├── ResourceNodes (Empty GameObject - Container)
+  │   ├── Hazards (Empty GameObject - Container)
+  │   └── MapBoundaries (Empty GameObject)
+  ├── Cameras
+  │   ├── Main Camera
+  │   └── UI Camera (if needed)
+  └── Audio
+      ├── AudioManager (Empty GameObject)
+      └── AudioSources (Empty GameObject - Container)
+
+  3. GameObject Creation and Script Assignment
+
+  3.1 GameManager Setup
+
+  Create GameManager GameObject:
+  1. Create Empty GameObject: Right-click in Hierarchy → Create Empty
+  2. Name it: GameManager
+  3. Position: (0, 0, 0)
+
+  Add Scripts to GameManager:
+  1. Select GameManager
+  2. Add Component → Scripts:
+    - GameManager.cs
+    - TimeManager.cs
+    - ResourceManager.cs
+    - BeeManager.cs
+    - TaskManager.cs
+    - ConfigurationManager.cs
+
+  GameManager Configuration:
+  // In Inspector for GameManager component:
+  - Current State: MainMenu
+  - Time Manager: (Auto-assigned)
+  - Resource Manager: (Auto-assigned)
+  - Bee Manager: (Auto-assigned)
+  - Task Manager: (Auto-assigned)
+  - External Map Controller: (Assign later)
+
+  3.2 UI Canvas Setup
+
+  Create UI Canvas:
+  1. Right-click in Hierarchy → UI → Canvas
+  2. Name: UI Canvas
+  3. Canvas component settings:
+    - Render Mode: Screen Space - Overlay
+    - UI Scale Mode: Scale With Screen Size
+    - Reference Resolution: 1920x1080
+
+  Add EventSystem:
+  - Should be created automatically with Canvas
+  - If not: Right-click → UI → Event System
+
+  3.3 ResourceDisplayUI Setup
+
+  Create ResourceDisplayUI:
+  1. Right-click on UI Canvas → UI → Empty
+  2. Name: ResourceDisplayUI
+  3. Add Component: ResourceDisplayUI.cs
+
+  Create UI Elements for ResourceDisplayUI:
+  ResourceDisplayUI
+  ├── ResourcePanel (UI → Panel)
+  │   ├── HoneyDisplay (UI → Horizontal Layout Group)
+  │   │   ├── HoneyIcon (UI → Image)
+  │   │   └── HoneyText (UI → Text - TextMeshPro)
+  │   ├── PollenDisplay (UI → Horizontal Layout Group)
+  │   │   ├── PollenIcon (UI → Image)
+  │   │   └── PollenText (UI → Text - TextMeshPro)
+  │   ├── BeeswaxDisplay (UI → Horizontal Layout Group)
+  │   │   ├── BeeswaxIcon (UI → Image)
+  │   │   └── BeeswaxText (UI → Text - TextMeshPro)
+  │   └── RoyalJellyDisplay (UI → Horizontal Layout Group)
+  │       ├── RoyalJellyIcon (UI → Image)
+  │       └── RoyalJellyText (UI → Text - TextMeshPro)
+  ├── PopulationPanel (UI → Panel)
+  │   ├── TotalPopulationText (UI → Text - TextMeshPro)
+  │   ├── WorkerBeesText (UI → Text - TextMeshPro)
+  │   └── QueenBeesText (UI → Text - TextMeshPro)
+  ├── TimePanel (UI → Panel)
+  │   ├── CurrentCycleText (UI → Text - TextMeshPro)
+  │   ├── CurrentSeasonText (UI → Text - TextMeshPro)
+  │   ├── TimeOfDayText (UI → Text - TextMeshPro)
+  │   ├── DayNightIndicator (UI → Image)
+  │   ├── CycleProgressBar (UI → Slider)
+  │   └── DayProgressBar (UI → Slider)
+  └── WarningPanel (UI → Panel)
+      ├── LowHoneyWarning (UI → Image)
+      ├── LowPollenWarning (UI → Image)
+      ├── LowRoyalJellyWarning (UI → Image)
+      └── WinterWarning (UI → Image)
+
+  ResourceDisplayUI Script Assignment:
+  1. Select ResourceDisplayUI GameObject
+  2. In Inspector, assign all the UI elements to their respective fields:
+    - Honey Text → HoneyText TextMeshPro component
+    - Pollen Text → PollenText TextMeshPro component
+    - etc.
+
+  3.4 NotificationSystem Setup
+
+  Create NotificationSystem:
+  1. Right-click on UI Canvas → UI → Empty
+  2. Name: NotificationSystem
+  3. Add Component: NotificationSystem.cs
+
+  Create Notification UI Structure:
+  NotificationSystem
+  ├── NotificationPanel (UI → Panel)
+  │   ├── NotificationScrollView (UI → Scroll View)
+  │   │   ├── Viewport
+  │   │   │   └── Content (with Content Size Fitter)
+  │   │   └── Scrollbar Vertical
+  │   └── NotificationCountText (UI → Text - TextMeshPro)
+  └── NotificationPrefab (Create as Prefab)
+      ├── NotificationBackground (UI → Image)
+      ├── NotificationText (UI → Text - TextMeshPro)
+      └── CloseButton (UI → Button)
+
+  Create Notification Prefab:
+  1. Create the NotificationPrefab structure above
+  2. Drag to Project folder to create prefab
+  3. Delete from scene
+  4. Assign prefab to NotificationSystem script
+
+  3.5 CommandPanel Setup
+
+  Create CommandPanel:
+  1. Right-click on UI Canvas → UI → Empty
+  2. Name: CommandPanel
+  3. Add Component: CommandPanel.cs
+
+  Create Command UI Structure:
+  CommandPanel
+  ├── BuildCommandsPanel (UI → Panel)
+  │   ├── BuildBasicCellButton (UI → Button)
+  │   ├── BuildNurseryCellButton (UI → Button)
+  │   ├── BuildHoneyStorageButton (UI → Button)
+  │   └── BuildPollenStorageButton (UI → Button)
+  ├── RoleAssignmentPanel (UI → Panel)
+  │   ├── RoleAssignmentDropdown (UI → Dropdown - TextMeshPro)
+  │   ├── AssignRoleButton (UI → Button)
+  │   └── SelectedBeeInfoText (UI → Text - TextMeshPro)
+  ├── ForagingCommandsPanel (UI → Panel)
+  │   ├── StartPioneerButton (UI → Button)
+  │   ├── DispatchForagersButton (UI → Button)
+  │   └── ForagingTargetDropdown (UI → Dropdown - TextMeshPro)
+  ├── ColonyCommandsPanel (UI → Panel)
+  │   ├── ThermoregulateButton (UI → Button)
+  │   ├── FeedQueenButton (UI → Button)
+  │   └── FeedLarvaeButton (UI → Button)
+  └── GameControlsPanel (UI → Panel)
+      ├── PauseButton (UI → Button)
+      ├── SpeedUpButton (UI → Button)
+      ├── SpeedDownButton (UI → Button)
+      └── GameSpeedText (UI → Text - TextMeshPro)
+
+  3.6 Hive Structure Setup
+
+  Create Hive Container:
+  1. Right-click in Hierarchy → Create Empty
+  2. Name: Hive
+  3. Position: (0, 0, 0)
+
+  Create HiveCells Container:
+  1. Right-click on Hive → Create Empty
+  2. Name: HiveCells
+  3. Position: (0, 0, 0)
+
+  Create BeeSpawnPoint:
+  1. Right-click on Hive → Create Empty
+  2. Name: BeeSpawnPoint
+  3. Position: (0, 0, 0)
+  4. Add Component: Transform (should be there by default)
+
+  3.7 Create HiveCell Prefab
+
+  Create HiveCell Prefab:
+  1. Right-click in Hierarchy → 2D Object → Sprite
+  2. Name: HiveCell
+  3. Add Components:
+    - HiveCell.cs script
+    - Collider2D (Box Collider 2D or Circle Collider 2D)
+    - SpriteRenderer (should be there)
+
+  HiveCell Structure:
+  HiveCell (Prefab)
+  ├── CellSprite (SpriteRenderer)
+  ├── ConstructionIndicator (GameObject with SpriteRenderer)
+  ├── TemperatureIndicator (GameObject with SpriteRenderer)
+  └── BroodSlot (Empty GameObject for brood placement)
+
+  Save as Prefab:
+  1. Drag HiveCell to Project folder
+  2. Delete from scene
+  3. This creates a reusable prefab
+
+  3.8 Create Bee Prefabs
+
+  Create Worker Bee Prefab:
+  1. Right-click in Hierarchy → 2D Object → Sprite
+  2. Name: WorkerBee
+  3. Add Components:
+    - Bee.cs script
+    - Collider2D (Circle Collider 2D)
+    - Rigidbody2D (if physics needed)
+    - SpriteRenderer
+
+  Create Queen Bee Prefab:
+  1. Right-click in Hierarchy → 2D Object → Sprite
+  2. Name: QueenBee
+  3. Add Components:
+    - QueenBee.cs script
+    - Collider2D (Circle Collider 2D)
+    - Rigidbody2D (if physics needed)
+    - SpriteRenderer
+
+  Save as Prefabs:
+  1. Drag both to Project folder
+  2. Delete from scene
+
+  3.9 Create Brood Prefabs
+
+  Create Brood Prefabs:
+  1. Create three sprites: Egg, Larva, Pupa
+  2. Each should have:
+    - Brood.cs script
+    - SpriteRenderer
+    - Collider2D
+
+  Brood Configuration:
+  - Set different sprites for each stage
+  - Configure stage durations in script
+  - Save as separate prefabs
+
+  3.10 External Map Setup
+
+  Create ExternalMap:
+  1. Right-click in Hierarchy → Create Empty
+  2. Name: ExternalMap
+  3. Position: (0, 0, 0)
+  4. Add Component: ExternalMapController.cs
+
+  Create Resource Node Structure:
+  ExternalMap
+  ├── ResourceNodes (Empty GameObject - Container)
+  ├── Hazards (Empty GameObject - Container)
+  └── MapBoundaries (Empty GameObject)
+
+  Create Resource Node Prefabs:
+  1. Create HoneySource sprite with:
+    - SpriteRenderer
+    - Collider2D
+    - Resource node identifier script/component
+  2. Create PollenSource sprite with same components
+
+  Create Hazard Prefabs:
+  1. Create SpiderWeb sprite
+  2. Create WindZone sprite
+  3. Both should have SpriteRenderer and Collider2D
+
+  3.11 Camera Setup
+
+  Main Camera Configuration:
+  1. Select Main Camera
+  2. Set Tag: MainCamera
+  3. Configure for 2D:
+    - Projection: Orthographic
+    - Size: 10 (adjust as needed)
+    - Position: (0, 0, -10)
+
+  4. Script Assignment and Configuration
+
+  4.1 GameManager Script Configuration
+
+  Select GameManager GameObject:
+  1. GameManager Component:
+    - Current State: MainMenu
+    - (Other managers auto-assigned)
+  2. BeeManager Component:
+    - Max Bee Population: 100
+    - Worker Bee Prefab: Drag WorkerBee prefab
+    - Queen Bee Prefab: Drag QueenBee prefab
+    - Starting Worker Bees: 10
+    - Starting Queen Bees: 1
+    - Bee Spawn Point: Drag BeeSpawnPoint GameObject
+  3. TaskManager Component:
+    - Max Concurrent Tasks: 20
+    - Task Update Interval: 1
+    - Auto Generate Tasks: true
+    - Task Generation Interval: 5
+  4. ConfigurationManager Component:
+    - Game Configuration: Create GameConfiguration asset (see below)
+    - Allow Runtime Changes: true
+    - Save Changes To File: true
+
+  4.2 Create GameConfiguration Asset
+
+  Create Configuration Asset:
+  1. Right-click in Project → Create → Mellifera → Game Configuration
+  2. Name: GameConfiguration
+  3. Configure all parameters as needed
+  4. Assign to ConfigurationManager
+
+  4.3 ExternalMapController Configuration
+
+  Select ExternalMap GameObject:
+  1. ExternalMapController Component:
+    - Map Size: (100, 20)
+    - Hive Entrance Position: (0, 0, 0)
+    - Ground Layer: Default
+    - Honey Source Prefab: Drag HoneySource prefab
+    - Pollen Source Prefab: Drag PollenSource prefab
+    - Spider Web Prefab: Drag SpiderWeb prefab
+    - Wind Zone Prefab: Drag WindZone prefab
+    - Bee Speed: 5
+    - Max Concurrent Foragers: 10
+
+  4.4 Final GameObject References
+
+  Link GameManager to ExternalMap:
+  1. Select GameManager
+  2. In GameManager component, assign External Map Controller field to ExternalMap GameObject
+
+  5. Testing Setup
+
+  5.1 Create Test Scene
+
+  1. Add some initial HiveCells:
+    - Drag HiveCell prefab into HiveCells container
+    - Create 3-4 cells in a hexagonal pattern
+    - Set different cell types (Nursery, Storage, etc.)
+  2. Position UI elements:
+    - ResourceDisplayUI: Top of screen
+    - CommandPanel: Bottom of screen
+    - NotificationSystem: Right side of screen
+  3. Set up camera bounds:
+    - Position camera to view the hive
+    - Adjust orthographic size as needed
+
+  5.2 Input Setup
+
+  1. Create Input Actions:
+    - Use the Input System package
+    - Create actions for mouse clicks, keyboard shortcuts
+    - Assign to appropriate scripts
+
+  6. Build Settings
+
+  1. File → Build Settings
+  2. Add Open Scenes
+  3. Platform: PC, Mac & Linux Standalone
+  4. Architecture: x86_64
+
+  7. Final Checklist
+
+  ✅ GameManager with all core scripts attached✅ UI Canvas with ResourceDisplayUI, NotificationSystem,
+  CommandPanel✅ Hive structure with HiveCells container and BeeSpawnPoint✅ ExternalMap with ResourceNodes and
+  Hazards containers✅ All prefabs created: WorkerBee, QueenBee, HiveCell, Brood stages✅ GameConfiguration asset
+  created and assigned✅ Camera positioned for 2D gameplay✅ All script references assigned in Inspector
+
+  8. Testing the Setup
+
+  1. Press Play
+  2. Check Console for errors
+  3. Verify UI displays resources and time
+  4. Test basic interactions (clicking, button responses)
+  5. Verify bee spawning and lifecycle
+
+  This setup provides a complete foundation for the Mellifera: Hive OS prototype with all systems properly
+  connected and configured!
