@@ -1,0 +1,102 @@
+Document 1: Game Prototype Development Plan (English Translation)
+1. Project Overview
+Working Title: Mellifera: Hive OS
+
+Genre: Colony Survival Simulation / Management / Base-Building
+
+Art Style: 2D Pixel Art
+
+Target Platform: PC (e.g., Steam)
+
+Development Engine: Unity Engine
+
+Core Concept: The player becomes the collective consciousness of a bee colony. They must manage worker bees with finite lifespans, navigate generational changes, and adapt to the environment to survive the harsh realities of nature and build their own "bee ecosystem kingdom."
+
+2. Prototype Development Goal
+To validate the core fun factor of the "Survive the First Winter" gameplay loop.
+
+To confirm that players intuitively feel the core dilemma of balancing labor allocation and resource conversion, and that they gain a sense of accomplishment from solving it.
+
+3. Prototype Scope
+a. Core Systems
+
+Time & Season System:
+
+1 Cycle (Day): Set to 5 real-world minutes.
+
+Day/Night Cycle: Day phase (3.5 mins), Night phase (1.5 mins). External activities are only possible during the day.
+
+Seasonal Rotation: Implement a compressed year of 45 cycles total: Spring (10) → Summer (15) → Autumn (10) → Winter (10). External activities are impossible during Winter, and honey consumption doubles.
+
+Resource & Entropy System:
+
+4 Core Resources: Honey, Pollen, Beeswax, Royal Jelly.
+
+Continuous Consumption (Entropy): All bees automatically consume Honey over time. The Queen automatically consumes Royal Jelly.
+
+Resource Conversion:
+
+Honey + Pollen → Royal Jelly (via a young worker bee's "Produce Royal Jelly" action).
+
+Honey + Pollen → Beeswax (via a worker bee's "Produce Wax" action).
+
+b. Units & Life Cycle
+
+3 Unit Types: Queen Bee, Worker Bee, Brood (Egg/Larva/Pupa).
+
+Queen Bee:
+
+Consumes Royal Jelly for survival. Hunger state reduces egg-laying rate.
+
+Periodically lays Eggs in available Nursery cells.
+
+Worker Bee:
+
+Lifespan System: Must have a "lifespan gauge" (e.g., 20 cycles) that depletes over time, leading to natural death.
+
+Role Assignment: Player can manually assign roles: Forage Honey, Forage Pollen, Produce Royal Jelly, Produce Wax, Nurse Larvae, Thermoregulate.
+
+Growth Cycle: The full Egg (3 days) → Larva (6) → Pupa (12) → Adult (Total 21 days) cycle must be implemented. Larvae must consume Pollen and Honey to grow.
+
+c. Game World & Interaction
+
+Internal Hive (Main View):
+
+2D cross-section view.
+
+Construction: Ability to build 4 cell types: Basic Cell, Nursery, Honey Storage, Pollen Storage.
+
+Temperature Management (Simplified): Apply temperature only to Nursery cells. Player can issue a 'Warm' command, which makes workers consume honey to raise the temperature.
+
+External World (Platformer Map):
+
+A single, fixed 2D side-scrolling map connected to the hive entrance.
+
+Resource Nodes: At least one Honey Source (Flower) and one Pollen Source (Flower).
+
+Hazards: 1-2 simple hazards (e.g., a spider web).
+
+'Pioneer-then-Automate' Loop:
+
+Pioneering: Player guides a bee to a resource node for the first time.
+
+Automation: Once discovered, player can assign bees to that node for automatic resource gathering.
+
+d. UI/UX (User Interface)
+
+Top Info Bar: Display current amounts of Honey, Pollen, Beeswax, Royal Jelly, Total Population, Current Season/Cycle, Time of Day (Day/Night).
+
+Unit Info Panel: On clicking a bee, show Name, Age (Lifespan Gauge), Current Role, Status (Hunger, Health).
+
+Command Panel: Buttons for player commands like Build, Assign Role, Dispatch for Exploration.
+
+Notification System: Text-based alerts for key events ("The Queen is hungry," "A worker bee has died," "Winter is coming").
+
+4. Prototype Success Criteria
+Does the player recognize "Surviving the Winter" as their first main goal without explicit instruction?
+
+Does the player feel a sense of pressure from the dwindling Honey supply and the Aging/Death of their bees?
+
+Does the player engage in strategic decision-making between Resource Gathering and Brood Rearing?
+
+Upon successfully surviving the first winter, does the player feel a clear sense of accomplishment and an desire for the next goal (growth, expansion)?

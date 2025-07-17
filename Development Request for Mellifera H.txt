@@ -1,0 +1,116 @@
+ Development Request for "Mellifera: Hive OS" - Prototype 1
+
+1. Introduction & Goal
+This document outlines the technical requirements for building the first playable prototype of "Mellifera: Hive OS," a 2D pixel art colony survival simulation developed in Unity for PC.
+
+The primary goal of this prototype is to validate the core gameplay loop: Can the player successfully manage a small, aging bee colony to survive its first winter by balancing internal resource management and external exploration? We need to test if this core loop is engaging and fun.
+
+2. Core Architecture Philosophy
+A modular, event-driven architecture is highly recommended. We need to avoid hard-coding dependencies between systems. For example, the TimeManager should broadcast an OnCycleEnd event, and other systems like the BeeManager (for aging) or ResourceManager (for consumption) should listen for this event rather than being directly called by the TimeManager. This will be crucial for managing the complexity of interconnected biological systems.
+
+3. Proposed Code Structure (Core Classes/Managers)
+Below is a proposed high-level class structure. Please review and refine as needed.
+
+GameManager.cs:
+
+A singleton to manage the overall game state (MainMenu, Playing, Paused, GameOver).
+
+Holds references to other key managers.
+
+Manages the main game loop and pause/play state.
+
+TimeManager.cs:
+
+Manages the flow of game time, including the total cycle count and the day/night timer (e.g., 5-minute cycle).
+
+Broadcasts critical time-based events: OnNewDay(int day), OnNightfall, OnDaybreak.
+
+ResourceManager.cs:
+
+A singleton that holds the colony's global inventory (Honey, Pollen, Beeswax, RoyalJelly) as floats or doubles.
+
+Provides public methods like AddResource(ResourceType type, float amount) and TryConsumeResource(ResourceType type, float amount).
+
+Handles the passive, continuous consumption of Honey and RoyalJelly based on population and time.
+
+BeeManager.cs:
+
+Manages a list of all Bee GameObjects in the colony.
+
+Handles spawning new bees (from pupae) and de-spawning dead bees.
+
+Listens to TimeManager events to trigger the Age() method on all bees.
+
+Bee.cs:
+
+Component attached to each bee prefab.
+
+Fields: beeName, beeRole, lifespan (in cycles), currentAge, stats (flight speed, carry capacity - for future use).
+
+State Machine: A simple state machine to manage behavior (Idling, Working, Foraging, Sleeping).
+
+Methods: Age(), Die(), AssignRole(Role newRole).
+
+QueenBee.cs:
+
+Inherits from Bee.cs.
+
+Additional Fields: hungerGauge, eggLayTimer.
+
+Unique Logic: Consumes RoyalJelly. When eggLayTimer is ready and a valid NurseryCell is available, it lays an Egg prefab.
+
+Brood.cs:
+
+Component for Egg, Larva, and Pupa prefabs.
+
+Manages its growth stage and timer. Larva stage requires nearby Pollen and Honey to be consumed to progress.
+
+HiveCell.cs:
+
+Component for each hexagonal cell prefab.
+
+Fields: cellType (Nursery, HoneyStorage, etc.), currentStoredAmount, temperature.
+
+Handles logic for being built and storing resources.
+
+TaskManager.cs:
+
+A singleton that manages a global list of available tasks (e.g., BuildTask, SupplyTask, CleanTask).
+
+Bees in an Idling state will query this manager to find the highest-priority task they are capable of performing.
+
+ExternalMapController.cs:
+
+Manages the 2D side-scrolling platformer map.
+
+Contains ResourceNode objects and Hazard objects.
+
+Handles the logic for the 'Pioneer' and 'Automate' foraging modes. Manages the pathfinding or movement of bee sprites in this area.
+
+4. Key Feature Implementation Details
+Aging & Death Loop:
+
+TimeManager sends a frequent OnTick event.
+
+BeeManager catches this and calls bee.Age(tickTime) on all active bees.
+
+In Bee.cs, currentAge is incremented.
+
+If currentAge >= lifespan, the bee.Die() method is called. This plays a death animation and notifies the BeeManager to remove it from the list.
+
+Pioneer-then-Automate Loop:
+
+Pioneering: Player manually controls a bee's destination on the ExternalMapController. The route taken (a series of Vector2 points) is recorded and associated with the target ResourceNode.
+
+Automation: When a bee is assigned to an already-pioneered ResourceNode, its ForagingState will simply retrieve the saved path and follow it, returning with resources. The ExternalMapController should handle this movement.
+
+5. Technical Success Criteria for Prototype
+The game must run smoothly with up to 50 bee units on screen.
+
+The core loop (aging, resource consumption, brood rearing, foraging) must be functional and stable.
+
+The save/load system is not required for this prototype.
+
+All key variables (bee lifespan, resource amounts, consumption rates) must be easily adjustable in a central configuration file or a ScriptableObject for rapid balancing.
+
+Please review this plan and provide feedback on the proposed architecture. Let's schedule a kickoff meeting to discuss the implementation details.
