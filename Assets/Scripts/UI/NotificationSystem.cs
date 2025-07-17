@@ -74,6 +74,14 @@ namespace Mellifera.UI
         {
             InitializeSystem();
             SubscribeToEvents();
+            
+            // Test notification
+            Invoke("TestNotification", 2f);
+        }
+        
+        private void TestNotification()
+        {
+            AddNotification("Notification system is working!", NotificationType.Success);
         }
         
         private void OnDestroy()

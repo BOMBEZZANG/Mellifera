@@ -42,6 +42,12 @@ namespace Mellifera.Core
             }
         }
         
+        private void Start()
+        {
+            // Auto-start the game for testing
+            StartGame();
+        }
+        
         private void InitializeManagers()
         {
             TimeManager = GetComponent<TimeManager>() ?? gameObject.AddComponent<TimeManager>();

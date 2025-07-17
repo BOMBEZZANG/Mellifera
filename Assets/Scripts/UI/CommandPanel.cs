@@ -18,14 +18,14 @@ namespace Mellifera.UI
         [SerializeField] private Button buildPollenStorageButton;
         
         [Header("Role Assignment")]
-        [SerializeField] private Dropdown roleAssignmentDropdown;
+        [SerializeField] private TMP_Dropdown roleAssignmentDropdown;
         [SerializeField] private Button assignRoleButton;
         [SerializeField] private TextMeshProUGUI selectedBeeInfoText;
         
         [Header("Foraging Commands")]
         [SerializeField] private Button startPioneerButton;
         [SerializeField] private Button dispatchForagersButton;
-        [SerializeField] private Dropdown foragingTargetDropdown;
+        [SerializeField] private TMP_Dropdown foragingTargetDropdown;
         
         [Header("Colony Commands")]
         [SerializeField] private Button thermoregulateButton;
